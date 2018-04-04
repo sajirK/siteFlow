@@ -15,6 +15,15 @@ import { EventModule } from './event/event.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DropdownComponent } from './dropdown/dropdown.component';
 
+
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +32,14 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     DropdownComponent
   ],
   imports: [
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     NgbModule.forRoot(),
     RouterModule.forRoot([
       {
